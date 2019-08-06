@@ -1,0 +1,225 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{Wave function of the isontropic potential}
+\author{Martin Johnsrud}
+
+\begin{document}
+    \maketitle
+
+    \subsection*{The Schrödinger equation}
+
+        The Shrödinger equation is, in all generality 
+
+        \begin{equation}
+            \label{Seq}
+            i \hbar \partial_t \Psi(t, \vec r) = \hat H \Psi(t, \vec r), 
+        \end{equation}
+        %
+        where the hamiltonian \(\hat H\) depends on the problem. This text examins an isotropic potenial, where the hamiltonian is
+        %
+        \begin{equation}
+            \hat H = -\frac{\hbar}{2 m} + \nabla V(r), 
+        \end{equation}
+        %
+        meaning the potential \(V\) only dempends on the distance from origo, \(r\). The first step is to use sparation of varibles, and assume the wave equation can be written in the form
+        %
+        \begin{equation*}
+            \Psi(t, \vec r) = \psi(\vec r)\phi(t).
+        \end{equation*}
+        %
+        inserting this into \eqref{Seq} we obtain
+        %
+        \begin{equation*}
+            i \hbar \psi(\vec r) \partial_t \phi(t) = \phi(t) \Big(-\frac{\hbar}{2 m} + \nabla V(r) \Big) \psi(\vec r).         
+        \end{equation*}
+        %
+        Carelessly devinding the equation with the wave function gives us
+        %
+        \begin{equation}
+            \label{Separated Seq}
+            \frac{1}{\phi(t)} i \hbar \partial_t \phi(t) = \frac{1}{\psi(\vec r)}\Big(-\frac{\hbar}{2 m} + \nabla V(r) \Big) \psi(\vec r) = E,
+        \end{equation}
+        %
+        where \(E\) is a constant with a carfully selected name. We can be certain that each side of the equation is an constant, as one side only depends on \(t\), and the other side on \(\vec r\). If they are not constant, we culd vary one side, while not changing the other, violating the equality. This is the time independent Shrödinger equation.
+
+        The time dependet side 
+        \begin{equation*}
+            \partial_t \phi(t) = \frac{-iE}{\hbar}\phi(t)
+        \end{equation*}
+        is solved by recoginizing that the only function that is its only derivative, up to a constant, is the exponential function. This yields
+        %
+        \begin{equation*}
+            \phi(t) = \exp \big(- E/\hbar t\big).
+        \end{equation*}
+        %
+        We could add a constant here, but as it will be multiplied with the solution for \(\phi(\vec r)\), we will let that function containt the constant instead.
+
+    \subsection*{The time independent Schrödinger eqaution}
+
+        Solving for \(\phi(\vec r)\) is considrably more work. As the problem is spherically symetric, we will choose spherical coordinates \((r, \phi, \theta)\). The laplacian in spherical coordinates is\footnote{Laplacian}
+        %
+        \begin{equation*}
+            \nabla^2 = \frac{1}{r^2}\frac{\partial}{\partial r} \bigg(r^2 \frac{\partial}{\partial r}\bigg) + \frac{1}{r^2\sin^2(\theta)}\bigg(\frac{\partial^2}{\partial \phi^2} + \sin(\theta)\frac{\partial}{\partial \theta}\bigg( \sin(\theta) \frac{\partial}{\partial \theta}\bigg) \bigg), 
+        \end{equation*}
+        %
+        meaning we can split it up in to two parts, one affecting the \(r\) coordinate, and \(\phi, \theta\) coordinates. Noticing that the similarity between the laplacian and the angular momentum operator, we write
+        %
+        \begin{equation*}
+            \nabla^2 = \frac{1}{r^2}\frac{\partial}{\partial r}\bigg(r^2\frac{\partial}{\partial r} \bigg) - \frac{1}{r^2 \hbar^2} {\hat L}^2
+        \end{equation*}
+        %
+        Making use of separation of varibales again, we assume
+        \begin{equation*}
+            \psi(r, \phi, \theta) = R(r)\Phi(\phi)\Theta(\theta) = R(r)Y(\phi, \theta).
+        \end{equation*}
+        Taking the \(\vec r\)-dependent part of \eqref{Separated Seq},
+        %
+        \begin{equation}
+            \label{TUSL}
+            \Big(-\frac{\hbar}{2 m} \nabla^2 + V(r) \Big) \psi(r, \phi, \theta) = E \psi(r, \phi, \theta),
+        \end{equation}
+        %
+        we get the time independent Schrödinger equation. Seeing that the hamiltonian have some parts affecting the \(r\) coordinate, and something affecting the \(\phi, \theta\) coordinates, we can pull the functions through the operators and divide though with \(\psi(r, \phi, \theta)\) and obtain
+        %
+        \begin{align*}
+            -\frac{1}{Y(\phi, \theta)}\frac{{\hat L}^2}{2m} Y(\phi, \theta) + \frac{1}{R(r)}\bigg[\frac{\hbar^2}{2m}\frac{\partial}{\partial r}\bigg(r^2\frac{\partial}{\partial r} \bigg) + r^2 \big(V(r) - E)\bigg] R(r) \\ = -\frac{1}{Y(\phi, \theta)}\frac{{\hat L}^2}{2m} Y(\phi, \theta) + \frac{1}{R(r)}\hat H_r R(r)
+        \end{align*}
+        %
+        This equation now has the dimensions of energy. To make it dimensionless, we introduce the variables
+        %
+        \begin{align*}
+            q = \frac{r}{a}, \quad \epsilon = \frac{2mE}{\hbar^2}, \quad \nu(q) = \frac{2mV(r / a)}{\hbar^2}, \quad \hat \Lambda = \frac{\hat L}{\hbar} 
+        \end{align*}
+        %
+        where \(a, m\) is constant choosen from the problem with dimensions length and mass. This makes the partial derivative
+        %
+        \begin{equation*}
+            \frac{\partial}{\partial q} = \frac{\partial r}{\partial q} \frac{\partial}{\partial r} = a \frac{\partial }{\partial r}
+        \end{equation*}
+        dimensionless as well. This makes TUSL
+        \begin{align}
+            \label{dimensionless TUSL}
+            \nonumber -\frac{1}{Y(\phi, \theta)}{\hat \Lambda}^2 Y(\phi, \theta) + \bigg[\frac{\partial}{\partial q}\bigg(q \frac{\partial}{\partial q}\ \bigg) + q^2 \big(\nu(q) - \epsilon \big) \bigg] Q(q) \\
+            = -\frac{1}{Y(\phi, \theta)}{\hat \Lambda}^2 Y(\phi, \theta) + \frac{1}{Q(q)}\hat H_q Q(q)  = 0.
+        \end{align}
+        As a mathematical sidenote, we can write this in a more mathematical way
+        %
+        \begin{equation*}
+            \nabla^2 F(r, \phi, \theta) = G(r) F(r, \phi, \theta),
+        \end{equation*}
+        %
+        with \(F = - \hbar /2m \psi\) and \(G = E - V\), making these problems mathematically equivalent, the only difference is the physical interpetation.
+
+    \subsection*{Spherical harmonics}
+
+        We will first focus on the angular dependent part of the equation. Writing out the angular momnetum operator in \eqref{dimensionless TUSL}, we get
+        %
+        \begin{equation*}
+            -\frac{1}{Y(\phi, \theta)}\bigg[\frac{1}{\sin^2(\theta)}\bigg(\frac{\partial^2}{\partial \phi^2} + \sin(\theta)\frac{\partial}{\partial \theta}\bigg( \sin(\theta) \frac{\partial}{\partial \theta}\bigg) \bigg)\bigg] Y(\phi, \theta) + \frac{\hat H_q Q(q)}{Q(q)} = 0.
+        \end{equation*}
+        %
+        This means we can use the process of separation of variables again, and get
+        %
+        \begin{equation}
+            \label{separated angular eq}
+            \frac{1}{\Phi} \frac{\partial^2}{\partial \phi^2} \Phi = - \frac{1}{\Theta}\sin(\theta)\frac{\partial}{\partial \theta}\bigg( \sin(\theta)\frac{\partial}{\partial \theta}\bigg) \Theta -\sin^2(\theta) \frac{\hat H_q Q}{Q}= -m^2,
+        \end{equation}
+        %
+        where \(-m^2\) is the separation constant. First, taking the \(\Phi\) part of the equation, we get
+        %
+        \begin{equation*}
+            \frac{\partial^2 \Phi}{\partial \phi^2} = -m^2 \Phi,
+        \end{equation*}
+        %
+        giving us the general solution \(\Phi(\phi) = A_1 e^{im\phi} + A_2 e^{-im\phi}\). One of the constant can be absorbed into the \(\Theta\)-fucntion, so that \(A_1\) can be assumed to be 1, without loss of generality. To have a well defined wave function, the have to impose the boundary condition \(\Phi(\phi) = \Phi(\phi + 2 \pi)\). From this it follows
+        %
+        \begin{align*}
+            & e^{im\phi}+ Ae^{-im\phi} = e^{im\phi + i2\pi m}+ Ae^{-im\phi - 2\pi i m} \\
+            \implies & e^{i m\phi}(1 - e^{i2\pi m}) = Ae^{-i m \phi}(e^{-i2\pi m} - 1), \,\,\, \forall A \in \mathbb{C} \\
+            \implies &e^{i2\pi m} = e^{-i2\pi m} = 1 \implies m \in \mathbb{N},
+        \end{align*}
+        that is, \(m\) is a whole number. Seeing that \(m\) can be both positive and negative, we will only use the solution
+        %
+        \begin{equation*}
+            \Phi(\phi) = e^{im\phi}, \quad m \in \mathbb{N}
+        \end{equation*}
+        %
+        as superpositions of this solution, combined with \(\Theta(\theta), R(r)\) covers the whole solution space.
+
+        Separating \eqref{separated angular eq} the other way yields
+        \begin{equation*}
+            - \frac{1}{\Theta}\frac{1}{\sin(\theta)}\frac{\partial}{\partial \theta}\bigg( \sin(\theta)\frac{\partial}{\partial \theta}\bigg) \Theta(\theta) + \frac{m^2}{\sin^2(\theta)} = \frac{\hat H_q Q}{Q} = \lambda
+        \end{equation*}
+        %
+        Here, we preform the sneaky substitution \(\cos(\theta) = x\), giving us
+        \begin{equation*}
+            \frac{\partial}{\partial \theta} = \frac{\partial x}{\partial \theta} \frac{\partial}{\partial x} = -\sin(\theta) \frac{\partial}{\partial x} = \sqrt{1 - x^2} \frac{\partial}{\partial x}
+        \end{equation*}
+        %
+        This gives us the general legendre differential equation
+        %
+        \begin{equation}
+            \label{Legendre equation}
+            \bigg[\frac{\partial}{\partial x} \bigg( (1 - x^2) \frac{\partial}{\partial x} \bigg)+ \bigg( \lambda  - \frac{m^2}{1 - x^2}\bigg) \bigg] P^m(x) = 0,
+        \end{equation}
+        where \(P^m(\sin(\theta)) = \Theta(\theta)\). We start by solving for \(m = 0\). Assuming \(P(x) \in C^\infty\), we can write 
+        \begin{equation*}
+            P(x) = \sum_{n = 0}^\infty a_n x^n.
+        \end{equation*}
+        %
+        Substituting this into the equation gives the terms
+        \begin{align*}
+            (1-x^2)\frac{\partial^2}{\partial x^2} P(x) = (1-x^2)\sum_{n=2}^\infty n (n - 1) a_nx^{n-2} = \sum_{n=0}^\infty (a_{n+2}(n + 1)(n+2) - a_n n (n - 1))x^n \\
+            2x\frac{\partial}{\partial x}P(x) = 2x \sum_{n = 1}^\infty na_n x^{n - 1} = \sum_{n = 0}^\infty 2 n a_{n} x^{n}. 
+        \end{align*} 
+        This lets us rewrite the equation as
+        \begin{equation*}
+            \sum_{n=0}^\infty \big((a_{n+2}(n + 1)(n+2) - a_n n (n - 1) -2n a_{n} + \lambda a_n\big)x^n = 0.
+        \end{equation*}
+        This gives an recursive formula for the coefficients,
+        \begin{equation*}
+            a_{n + 2} = \frac{n(n + 1) - \lambda}{(n + 1)(n + 2)}a_n.
+        \end{equation*}
+        This gives us three free parameters, \(\lambda, a_0, a_1\). If we look at the asymptotic behaviror of the coefficients, we see that
+        \begin{equation*}
+            a_{2n} \sim a_n, 
+        \end{equation*}
+        meaning the series does not converge. The only way to force convergence, is to set
+        \begin{equation*}
+            \lambda = l(l + 1), l \in \mathbb{N^+}, \quad a_0 = C \in \mathbb{C}, \quad a_1 = 0, 
+        \end{equation*}
+        if \(l\) is even, or
+        \begin{equation*}
+            \lambda = l(l + 1), l \in \mathbb{N^+}, \quad a_0 = 0, \quad a_1 = C \in \mathbb{C}, 
+        \end{equation*}
+        if \(l\) is odd.
+        This gives our soultion, for \(m = 0\), of the angualr part of the equation
+        \begin{equation*}
+            Y(\phi, \Theta) = C P^l(\cos(\theta))e^{im\phi}.
+        \end{equation*}
+        Here, \(C\) is pulled out of \(P^l\), and \(a_0\) set to 1. The first few instances of \(P^l(x)\) are
+        \begin{align*}
+            P^0(x) &= 1,\\
+            P^1(x) &= x,\\
+            P^2(x) = & 1 - \frac{1}{3}x^2, \\
+            P^3(x) = & x - \frac{5}{3}x^3.
+        \end{align*}
+        %
+        A different way to write the legendre function is with the rodriguez form,
+        %
+        \begin{equation*}
+            P^l(x) = \frac{\partial^l}{\partial x^l}(1 - x^2)^l. 
+        \end{equation*}
+        %
+        We can see this by applying the operator from the legendre equation.
+        \begin{align*}
+            & \bigg[\frac{\partial}{\partial x} \bigg( (1 - x^2) \frac{\partial}{\partial x} \bigg)+ \lambda  \bigg] \frac{\partial^l}{\partial x^l}(1 - x^2)^l \\ 
+            = & \frac{\partial}{\partial x}(1 - x^2)\bigg(\frac{\partial^{l+1}}{\partial x^{l + 1}}(1 - x^2)^l - \frac{\partial^l}{\partial x^l}2xl(1 - x^2)^{l - 1}\bigg) \\ 
+            = & (\frac{\partial}{\partial x} - 2x)\bigg(\frac{\partial^{l+1}}{\partial x^{l + 1}}(1 - x^2)^l - \frac{\partial^l}{\partial x^l}2xl(1 - x^2)^{l - 1}\bigg)
+        \end{align*}
+
+
+\end{document}

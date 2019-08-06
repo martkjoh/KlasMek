@@ -1,0 +1,205 @@
+\documentclass{article}
+
+\input{../include}
+
+
+\title{Legendres genereal differential equation}
+
+
+\begin{document}
+    \maketitle
+
+    The general legendre differential equation is given by 
+    %
+    \begin{equation}
+        \label{Legendre equation}
+        \bigg[\d[x] \bigg( (1 - x^2) \d[x] \bigg) + \lambda  - \frac{m^2}{1 - x^2} \bigg] P(x) = 0,
+    \end{equation}
+    %
+    and is part of the laplace equation i polar coordinates. We start by solving for \(m = 0\). Assuming \(P(x) \in C^\infty\), we can write 
+    %
+    \begin{equation*}
+        P(x) = \sum_{n = 0}^\infty a_n x^n.
+    \end{equation*}
+    %
+    Substituting this into the equation gives the terms
+    %
+    \begin{align*}
+        (1-x^2) \d[x]2 P(x) = (1-x^2)\sum_{n=2}^\infty n (n - 1) a_nx^{n-2} 
+        \\ = \sum_{n=0}^\infty (a_{n+2}(n + 1)(n+2) - a_n n (n - 1))x^n \\
+        2x \d[x] P(x) = 2x \sum_{n = 1}^\infty na_n x^{n - 1} = \sum_{n = 0}^\infty 2 n a_{n} x^{n}. 
+    \end{align*} 
+    %
+    This lets us rewrite \eqref{Legendre equation} as
+    %
+    \begin{equation*}
+        \sum_{n=0}^\infty \big((a_{n+2}(n + 1)(n+2) - a_n n (n - 1) -2n a_{n} + \lambda a_n\big)x^n = 0.
+    \end{equation*}
+    %
+    Seeing that this has to be true for all \(x\), it also has to be true for all \(n\). This gives an recursive formula for the coefficients,
+    %
+    \begin{equation*}
+        a_{n + 2} = \frac{n(n + 1) - \lambda}{(n + 1)(n + 2)}a_n.
+    \end{equation*}
+    %
+    This gives us three free parameters, \(\lambda, a_0, a_1\). If we look at the asymptotic behaviror of the coefficients, we see that
+    %
+    \begin{equation*}
+        a_{2n} \sim a_n, 
+    \end{equation*}
+    %
+    meaning the series does not converge. The only way to force convergence, is to set
+    %
+    \begin{equation*}
+        \lambda = l(l + 1), l \in \mathbb{N^+}, 
+    \end{equation*}
+    %
+    and \(a_0 = 0\) if \(l\) is even, or \(a_1 = 0\) if \(l\) is odd.
+    This sets the coefficents equal to \(0\) after finitly many terms, and gives us a soultion for \(m = 0\). The first few instances of \(P^l(x)\), up to a multiplicative constant, are
+    %
+    \begin{align*}
+        P^0(x) &= 1,\\
+        P^1(x) &= x,\\
+        P^2(x) = & 1 - \frac{1}{3}x^2, \\
+        P^3(x) = & x - \frac{5}{3}x^3.
+    \end{align*}
+    %
+    To find an explicit formula, we choose 
+    %
+    \begin{equation*}
+        a_l = \frac{(2l)!}{2^l l!^2}.
+    \end{equation*}
+    %
+    We then rearange the recursive relationsship to go backwards,
+    %
+    \begin{equation*}
+        a_{n + 2}\frac{(n + 1)(n + 2)}{(n - l)(n + l + 1)} = a_{n}.
+    \end{equation*}
+    %
+    To see the pattern that emerges, we find the next to last coefficent.
+    %
+    \begin{align*}
+        a_{l - 2} = \frac{(2l)!}{2^l l!^2} \frac{(l - 1)(l)}{(-2)(2l -1)} = \frac{(2l - 2)!}{2^{l} (l - 2)!(l-1)!} \frac{(-1)}{1!}\\
+    \end{align*}
+    %
+    generalizing this, we obtain
+    %
+    \begin{align*}
+        a_{l - 2m} = \frac{(-1)^m(2(l - m))!}{2^{l} (l - 2m)!(l - m)! m!} = \frac{(-1)^m}{2^l}\binom{l}{m} \binom{2(l - m)}{l}, \quad
+        m \in [0, ..., \lfloor l/2 \rfloor] 
+    \end{align*}
+    %
+    This results in an explicit form of the legendre polynomial,
+    %
+    \begin{equation*}
+        P^l(x) = \sum_{n = 0}^{\floor{l/2}} \frac{(-1)^m}{2^l}\binom{l}{m} \binom{2(l - m)}{l} x^{l - 2m}
+    \end{equation*}
+    %
+    With some really creative rewriting, we can get a more compact form.
+    %
+    \begin{align*}
+        P^l(x) = \sum_{n = 0}^{\floor{l/2}} \frac{(-1)^m}{2^l}\binom{l}{m} \binom{2(l - m)}{l} \bigg[\frac{(l - 2m)!}{(2(l - m))!}\frac{\mathrm{d}^l}{\mathrm{d}x^l}x^{2(l - m)}\bigg] = \\ \sum_{n = 0}^{\floor{l/2}} \frac{1}{2^ll!}\binom{l}{m} \frac{\mathrm{d}^l}{\mathrm{d}x^l}(x^2)^{(l - m)} = \frac{1}{2^ll!} \frac{\mathrm{d}^l}{\mathrm{d}x^l} \sum_{n = 0}^{\floor{l/2}} \binom{l}{m}(-1)^m(x^2)^{(l - m)}  
+    \end{align*}
+    %
+    Recognizing that, for \(n > \floor{l / 2}\), the term in the sum will be of degree less than \(l\), and therefore the derivation oparator will set it to zero, we can change the index, and recognize it as a binomial expansion.
+    %
+    \begin{align*}
+        P^l(x) & = \frac{1}{2^ll!} \frac{\mathrm{d}^l}{\mathrm{d}x^l} \sum_{n = 0}^{l} \binom{l}{m}(-1)^m(x^2)^{(l - m)} \\ & = \frac{1}{2^ll!} \frac{\mathrm{d}^l}{\mathrm{d}x^l} \sum_{n = 0}^{l} \binom{l}{m}(-1)^m(x^2)^{(l - m)} = \frac{1}{2^ll!} \frac{\mathrm{d}^l}{\mathrm{d}x^l} (1 - x^2)^l
+    \end{align*}
+    %
+    This is the Rodrigues formula.
+
+    To find the solution for \(m \neq 0\), we start by plugging our solution in to the equation for \(m = 0\). This equation can of course be derivated with respect to x as many times we want, and still remain zero.
+    %
+    \begin{align*}
+        &\d[x] \bigg[\d[x] \bigg( (1 - x^2) \d[x] \bigg)+ l(l + 1) \bigg] P^l(x) = 0 
+        \\
+        = & \d[x] \bigg[\bigg( (1 - x^2) \d[x]2 - 2x\d[x] \bigg)+ l(l + 1) \bigg] P^l(x) 
+        \\
+        = & \bigg[\bigg( (1 - x^2) \d[x]2 - 4x\d[x] - 2 \bigg)+ l(l + 1) \bigg] \d[x] P^l(x)
+        \\
+        = & \bigg[ (1 - x^2) \d[x]2 - 4x\d[x] + l(l + 1) - 2 \bigg] \d[x] P^l(x)
+    \end{align*}
+    %
+    Generealizing, we get
+    %
+    \begin{align*}
+        &\d[x]m \bigg[\bigg( (1 - x^2) \d[x]2 - 2x\d[x] \bigg)+ l(l + 1) \bigg] P^l(x) 
+        \\
+        = &\d[x]m-1  \bigg[ (1 - x^2) \d[x]2 - 4x\d[x] + l(l + 1) - 2 \bigg] \d[x] P^l(x)
+        \\
+        = &\d[x]m-2  \bigg[ (1 - x^2) \d[x]2 - 6x\d[x] + l(l + 1) - 6 \bigg] \d[x]2 P^l(x)
+        \\
+        = &\d[x]m-3  \bigg[ (1 - x^2) \d[x]2 - 8x\d[x] + l(l + 1) - 12 \bigg] \d[x]3 P^l(x)
+        \\
+        &\quad \quad \quad \quad \quad \quad \quad \quad \vdots
+        \\
+        = &\bigg[ (1 - x^2) \d[x]2 - 2(m + 1)x\d[x] + l(l + 1) - m(m + 1) \bigg] \d[x]m P^l(x)
+        \\
+        = &\bigg[ \d[x] (1 - x^2) \d[x] + l(l + 1) - m(m + 1) - 2mx\d[x] \bigg] \d[x]m P^l(x)    
+    \end{align*}
+    %
+    Being hit with devine inspiration, we multiply by \((1 - x^2)^{m/2} / (1 - x^2)^{m/2}\), and pull the lower part through the operator
+    %
+    \begin{align*}
+        & \hspace{-60pt} \bigg[ 
+            \textcolor{blue}{\d[x] (1 - x^2) \d[x] (1 - x^2)^{-m/2}} + 
+            \frac{l(l + 1)}{(1 - x^2)^{m/2}} - \frac{(m^2 + m)}{(1 - x^2)^{m/2}} - 2mx\d[x] (1 - x^2)^{-m/2} \bigg] 
+            (1 - x^2)^{m/2}\d[x]m P^l(x)
+        \\
+        \\ 
+        = & \bigg[ 
+            \textcolor{blue}{\d[x] \frac{(1 - x^2)}{(1 - x^2)^{m/2}} \d[x] } + 
+            \textcolor{red}{\d[x] mx (1 - x^2)^{-m/2}} 
+        \\ & + \frac{l(l + 1)}{(1 - x^2)^{m/2}}
+            - \frac{(m^2 + m)}{(1 - x^2)^{m/2}} - 
+            2mx\d[x] (1 - x^2)^{-m/2} \bigg] 
+             P^l_m(x)
+        \\
+        \\
+        = & \bigg[ 
+            \textcolor{blue}{\frac{mx(1 - x^2)}{(1 - x^2)^{m/2 + 1}}\d[x] + (1 - x^2)^{-m/2} \d[x] (1 - x^2)^{1}\d[x] } + 
+        \\ & \textcolor{red}{\frac{m}{(1 - x^2)^{m/2}} + \frac{m^2x^2}{(1 - x^2)^{m/2 +1}} + \frac{mx} {(1 - x^2)^{m/2}}\d[x] } 
+        \\ & + \frac{l(l + 1)}{(1 - x^2)^{m/2}} - 
+            \frac{(m^2 + m)}{(1 - x^2)^{m/2}} - 
+            \frac{2m^2x^2}{(1 - x^2)^{m/2 + 1}} -
+            \frac{2mx} {(1 - x^2)^{-m/2}}\d[x] \bigg] 
+            P^l_m(x)
+        \\
+        \\
+        = & (1 - x^2)^{-m/2} \bigg[ 
+            \textcolor{blue}{\d[x] (1 - x^2)\d[x] + mx \d[x] } + 
+            \textcolor{red}{m + \frac{m^2x^2}{(1 - x^2)} + mx \d[x] } 
+        \\ & + l(l + 1)  - (m^2 + m) -
+            \frac{2m^2x^2}{(1 - x^2)} - 2mx\d[x] \bigg] 
+            P^l_m(x)
+        \\
+        \\
+        = & (1 - x^2)^{-m/2} \bigg[ 
+            \d[x] (1 - x^2)\d[x]  +
+            l(l + 1) - m^2 \bigg( 1 +
+            \frac{x^2}{(1 - x^2)} \bigg)\bigg] 
+            P^l_m(x)
+        \\
+        \\
+        & = (1 - x^2)^{-m/2} \bigg[ 
+            \d[x] (1 - x^2)\d[x] + l(l + 1) -
+            \frac{m^2}{(1 - x^2)} \bigg] 
+            P^l_m(x) = 0
+    \end{align*}
+    %
+    This proves that the associated legendre function,
+    %
+    \begin{equation*}
+        P(x)^l_m = (1 - x^2)^{m/2}\d[x]m P^l(x) = \frac{1}{l^2 l!}(1 - x^2)^{{2}/{m}} \d[x]{l + m} (1 - x^2)^l,
+    \end{equation*}
+    %
+    solves the general legendre equation \eqref{Legendre equation}, that is
+    %
+    \begin{equation*}
+        \bigg[\d[x] \bigg( (1 - x^2) \d[x] \bigg)+ l(l + 1)  - \frac{m^2}{1 - x^2} \bigg] P^l_m(x) = 0.     
+        \quad \quad \qedsymbol
+    \end{equation*}
+
+
+\end{document}
