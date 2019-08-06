@@ -1,7 +1,6 @@
 \documentclass{article}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
+\input{../include}
 
 \title{Wave function of the isontropic potential}
 \author{Martin Johnsrud}
@@ -102,7 +101,7 @@
         dimensionless as well. This makes TUSL
         \begin{align}
             \label{dimensionless TUSL}
-            \nonumber -\frac{1}{Y(\phi, \theta)}{\hat \Lambda}^2 Y(\phi, \theta) + \bigg[\frac{\partial}{\partial q}\bigg(q \frac{\partial}{\partial q}\ \bigg) + q^2 \big(\nu(q) - \epsilon \big) \bigg] Q(q) \\
+            \nonumber -\frac{1}{Y(\phi, \theta)}{\hat \Lambda}^2 Y(\phi, \theta) + \bigg[\frac{\partial}{\partial q}\bigg(q^2 \frac{\partial}{\partial q}\ \bigg) + q^2 \big(\nu(q) - \epsilon \big) \bigg] Q(q) \\
             = -\frac{1}{Y(\phi, \theta)}{\hat \Lambda}^2 Y(\phi, \theta) + \frac{1}{Q(q)}\hat H_q Q(q)  = 0.
         \end{align}
         As a mathematical sidenote, we can write this in a more mathematical way
@@ -163,63 +162,34 @@
         %
         \begin{equation}
             \label{Legendre equation}
-            \bigg[\frac{\partial}{\partial x} \bigg( (1 - x^2) \frac{\partial}{\partial x} \bigg)+ \bigg( \lambda  - \frac{m^2}{1 - x^2}\bigg) \bigg] P^m(x) = 0,
+            \bigg[\frac{\partial}{\partial x} \bigg( (1 - x^2) \frac{\partial}{\partial x} \bigg)+ l(l + 1)  - \frac{m^2}{1 - x^2} \bigg] P^l_m(x) = 0,
         \end{equation}
-        where \(P^m(\sin(\theta)) = \Theta(\theta)\). We start by solving for \(m = 0\). Assuming \(P(x) \in C^\infty\), we can write 
+        where \(\Theta^{l,m}(\theta) = P^l_m(\cos(\theta))\). Solving for \(P^l_m(x)\), show in the pdf of legendre functions \footnote[1]{\url{https://github.com/martkjoh/KlasMek/blob/master/legendre_functions/legendre_functions.pdf}}. This results in 
         \begin{equation*}
-            P(x) = \sum_{n = 0}^\infty a_n x^n.
+            P^l_m(x) = \frac{1}{l^2 l!}(1 - x^2)^{{m}/{2}} \d[x]{l + m} (1 - x^2)^l, \quad l \in\mathbb{N^+}, \,\, m\in \{-l, ... 0, ... l\}.
         \end{equation*}
         %
-        Substituting this into the equation gives the terms
-        \begin{align*}
-            (1-x^2)\frac{\partial^2}{\partial x^2} P(x) = (1-x^2)\sum_{n=2}^\infty n (n - 1) a_nx^{n-2} = \sum_{n=0}^\infty (a_{n+2}(n + 1)(n+2) - a_n n (n - 1))x^n \\
-            2x\frac{\partial}{\partial x}P(x) = 2x \sum_{n = 1}^\infty na_n x^{n - 1} = \sum_{n = 0}^\infty 2 n a_{n} x^{n}. 
-        \end{align*} 
-        This lets us rewrite the equation as
-        \begin{equation*}
-            \sum_{n=0}^\infty \big((a_{n+2}(n + 1)(n+2) - a_n n (n - 1) -2n a_{n} + \lambda a_n\big)x^n = 0.
-        \end{equation*}
-        This gives an recursive formula for the coefficients,
-        \begin{equation*}
-            a_{n + 2} = \frac{n(n + 1) - \lambda}{(n + 1)(n + 2)}a_n.
-        \end{equation*}
-        This gives us three free parameters, \(\lambda, a_0, a_1\). If we look at the asymptotic behaviror of the coefficients, we see that
-        \begin{equation*}
-            a_{2n} \sim a_n, 
-        \end{equation*}
-        meaning the series does not converge. The only way to force convergence, is to set
-        \begin{equation*}
-            \lambda = l(l + 1), l \in \mathbb{N^+}, \quad a_0 = C \in \mathbb{C}, \quad a_1 = 0, 
-        \end{equation*}
-        if \(l\) is even, or
-        \begin{equation*}
-            \lambda = l(l + 1), l \in \mathbb{N^+}, \quad a_0 = 0, \quad a_1 = C \in \mathbb{C}, 
-        \end{equation*}
-        if \(l\) is odd.
-        This gives our soultion, for \(m = 0\), of the angualr part of the equation
-        \begin{equation*}
-            Y(\phi, \Theta) = C P^l(\cos(\theta))e^{im\phi}.
-        \end{equation*}
-        Here, \(C\) is pulled out of \(P^l\), and \(a_0\) set to 1. The first few instances of \(P^l(x)\) are
-        \begin{align*}
-            P^0(x) &= 1,\\
-            P^1(x) &= x,\\
-            P^2(x) = & 1 - \frac{1}{3}x^2, \\
-            P^3(x) = & x - \frac{5}{3}x^3.
-        \end{align*}
-        %
-        A different way to write the legendre function is with the rodriguez form,
+        The full solution to the spherical problem then becomes
         %
         \begin{equation*}
-            P^l(x) = \frac{\partial^l}{\partial x^l}(1 - x^2)^l. 
+            Y(\phi, \theta) = CP^l_m(\cos(\theta))e^{im\phi},
         \end{equation*}
         %
-        We can see this by applying the operator from the legendre equation.
-        \begin{align*}
-            & \bigg[\frac{\partial}{\partial x} \bigg( (1 - x^2) \frac{\partial}{\partial x} \bigg)+ \lambda  \bigg] \frac{\partial^l}{\partial x^l}(1 - x^2)^l \\ 
-            = & \frac{\partial}{\partial x}(1 - x^2)\bigg(\frac{\partial^{l+1}}{\partial x^{l + 1}}(1 - x^2)^l - \frac{\partial^l}{\partial x^l}2xl(1 - x^2)^{l - 1}\bigg) \\ 
-            = & (\frac{\partial}{\partial x} - 2x)\bigg(\frac{\partial^{l+1}}{\partial x^{l + 1}}(1 - x^2)^l - \frac{\partial^l}{\partial x^l}2xl(1 - x^2)^{l - 1}\bigg)
-        \end{align*}
+        known as the spherical harmonics.
+        
+    \subsection*{The radial equation}
 
+        The last equation is
+        \begin{equation*}
+            \bigg[\frac{\partial}{\partial q}\bigg(q \frac{\partial}{\partial q}\ \bigg) + q^2 \big(\nu(q) - \epsilon \big) \bigg] Q(q) = l(l + 1)Q(q)
+        \end{equation*}
+        rewriting the equation,
+        \begin{equation*}
+            \bigg[ \frac{1}{q^2} \del[q] \bigg( q^2 \del[q] \bigg) - \frac{l(l + 1)}{q^2} + \nu(q) \bigg] Q(q) = \epsilon Q(q)
+        \end{equation*}
+        Defining \(\rho(q) = qQ(q)\), and seeing that
+        \begin{equation*}
+            \frac{1}{q} \del[q]2 \rho(q) = \frac{1}{q} \del[q] \bigg(Q(q) + q \del[q] Q(q) \bigg) = \frac{2}{q} \del[q] Q(q) + \del[q]2 Q(q) = \frac{1}{q^2} \del[q] \bigg( q^2 \del[q] \bigg)
+        \end{equation*}
 
 \end{document}
