@@ -4,3 +4,5 @@
 *.out
 *.log
 *.synctex.gz
+*.html
+/dp_frames
