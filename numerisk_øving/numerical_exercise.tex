@@ -1,0 +1,48 @@
+\documentclass{article}
+
+\input{../LaTeX/include}
+
+\title{Numerical exerice in classical mechanics}
+
+
+\begin{document}
+    \section*{Introduction}
+    This text explores several different methods for solving differential equations to model a pendulum. The methods are anlyzed for different time steps, to see the different expences of running the methods.
+    
+    \section*{Theory}
+    Using the small angle approximation for a pendulum, we get the differential equation
+    
+    \begin{equation*}
+        \d[t]2 \theta(t) = -\frac{g}{l} \theta(t)
+    \end{equation*}
+    This can be rewritten in the form
+        \begin{equation*}
+            \dot y = \d[t]
+            \begin{pmatrix}
+                \theta \\
+                \dot \theta
+            \end{pmatrix}
+            = f 
+            \begin{pmatrix}
+                \theta \\
+                \dot \theta
+            \end{pmatrix}
+             =
+            \begin{pmatrix}
+                \dot \theta \\
+                -\frac{g}{l} \theta,
+            \end{pmatrix} 
+        \end{equation*}  
+    making explicit differential equation solvers straight forward. Eulers method is
+    \begin{equation*}
+        y_{n + 1} = f(y_n) \Delta t,
+    \end{equation*}
+    and Runge Kutta 4 is.
+    \begin{align*}
+        k_1 &= f(y_n) ,\\
+        k_2 &= f(y_n + k_1 / 2)\Delta t, \\
+        k_3 &= f(y_n + k_2 / 2)\Delta t, \\
+        k_4 &= f(y_n + k_3)\Delta t, \\
+        y_{n + 1} &= y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4).
+    \end{align*}
+\end{document}
