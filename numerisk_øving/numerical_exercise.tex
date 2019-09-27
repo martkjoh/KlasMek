@@ -2,12 +2,19 @@
 
 \input{../LaTeX/include}
 
+\usepackage{graphicx}
+
+\graphicspath{{.\\numerisk_øving\\bilder\\}}
+
 \title{Numerical exerice in classical mechanics}
+\author{Martin Johnsrud}
 
 
 \begin{document}
+    \maketitle
+
     \section*{Introduction}
-    This text explores several different methods for solving differential equations to model a pendulum. The methods are anlyzed for different time steps, to see the different expences of running the methods.
+    This text explores several different methods for solving differential equations to model a pendulum. The methods are anlyzed for different time steps, to see the advatages of running the different methods.
     
     \section*{Theory}
     Using the small angle approximation for a pendulum, we get the differential equation
@@ -37,7 +44,7 @@
     \begin{equation*}
         y_{n + 1} = f(y_n) \Delta t,
     \end{equation*}
-    and Runge Kutta 4 is.
+    and Runge Kutta 4 is
     \begin{align*}
         k_1 &= f(y_n) ,\\
         k_2 &= f(y_n + k_1 / 2)\Delta t, \\
@@ -45,4 +52,59 @@
         k_4 &= f(y_n + k_3)\Delta t, \\
         y_{n + 1} &= y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4).
     \end{align*}
-\end{document}
+
+    As we will see later, these methods does not conserve energy. This is achived with the implicit Eurler-Cromer method
+
+    \begin{align*}
+        \dot \theta_{n + 1} = \dot \theta_{n} - \frac{g}{l} \theta \\
+        \theta_{n + 1} = \dot \theta_{n + 1} \Delta t
+    \end{align*}
+
+\section*{Results}
+    \subsection*{Eulers method}
+
+        \begin{figure}[h]
+            \includegraphics[width = \textwidth]{{euler_0.pdf}}
+            \caption{The upper plot shows the oscillations of the pendulum with different time-steps, comparing them to the analytical solution. The lower plot shows how the energy of the different systems increases with time.}
+            \label{Eulers method}
+        \end{figure}        
+
+        Figure \ref{Eulers method} shows the resultus of moddeling the system with Eurlers method for using different time steps, $\Delta t \in \{0.005, 0.02, 0.045\}$, over a time period $t \in [0, 10]$. Based on this analysis, we can see that a time step of around $\Delta t = 0.005$ is sufficent for accurate results, however for large enough time periods, all timesteps makes the method unstable.
+
+    \subsection*{Comparison with other methods}
+
+        Figure \ref{Phase space} and \ref{All methods} compares Eulers method with Euler-Cromer and Runge-Kutta 4 using the same time step ($\Delta t = 0.5$). This comparison shows that Eulers method is much less stabel than the other methods. Runge-Kutta 4 is more computationally expensive as it is a method of a higher order, however Euler-Cromer achives much higher stability without being more expensive.
+
+        \begin{figure}[h]
+            \hspace{-0.1 \textwidth}
+            \includegraphics[width = 1.2\textwidth]{{all_methods_phase.pdf}}
+            \caption{This figure shows motion of the pendulum through phase space, the space of coordinates $(\theta, \dot \theta)$, parametrized by time $t$. This is a plot of the same motoion as in figure \ref{All methods}.}
+            \label{Phase space}
+        \end{figure}  
+
+        \begin{figure}[h]
+            \includegraphics[width = \textwidth]{{all_methods_0.pdf}}
+            \includegraphics[width = \textwidth]{{all_methods_1.pdf}}
+            \includegraphics[width = \textwidth]{{all_methods_2.pdf}}
+            \caption{A comparison between the methods discussed in the text. Time is plotted against the angle $\theta$ of the pendulum at the left, and the energy $E$ at the right. From top to bottom, the methods are Euler, Euler-Cromer and Runge-Kutta 4. }
+            \label{All methods}
+        \end{figure}  
+
+    \subsection*{Euler-Cromer vs. Runge-Kutta 4}
+        
+        \begin{figure}[h]
+            \includegraphics[width = \textwidth]{{ECvsRK4_phase.pdf}}
+            \caption{The path in phase space of Euler-Cromer method and Runge-Kutta 4, corresponding to the movements in figure \ref{EC vs RK4}}
+            \label{Phase space 2}
+        \end{figure}
+        
+        \begin{figure}[h]
+            \includegraphics[width = \textwidth]{{ECvsRK4_0.pdf}}
+            \includegraphics[width = \textwidth]{{ECvsRK4_1.pdf}}
+            \caption{Comparison of the Euler-Cromer method and Runge-Kutta 4.}
+            \label{EC vs RK4}
+        \end{figure}
+        
+        Though both Euler-Cromer and Runge-Kutta 4 are more stable than Euler, they have different advantages. Euler-Cormer conserves energy, so however long the simulation is run for, it will not diverge. The disadvatage of Euler-Cromer can be seen in the phase diagram in figure \ref{Phase space 2}. While the Runge-Kutta path keeps in a (jagged) circle, the path of the Euler-Cromer is elongated when the timestep increases. This means that even though Euler-Cromer is more stabel, it deviates more in the start of the simulation. However, as we can see from figure \ref{EC vs RK4}, Runge-Kutta 4 looses energy. It will therefore always diverge further from the analytical solution the longer the simulation is run for. For the interval tested here ($t = 10$), Euler-Cromer is fairly accurate with $\Delta t = 0.04$, while Runge-Kutta 4 remains accurate enough up to $\Delta t = 0.16$. For longer simulations, however, Runge-Kutta would need shorter steps.    
+
+\end{document} 

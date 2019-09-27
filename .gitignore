@@ -1,8 +1,4 @@
-*.aux
-*.fdb_latexmk
-*.fls
-*.out
-*.log
-*.synctex.gz
 *.html
 /dp_frames
+*.png
+numerisk_øving/bilder/*
