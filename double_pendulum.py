@@ -1,3 +1,4 @@
+
 import numpy as np
 from numpy import e, pi, sin, cos, exp
 import matplotlib.pyplot as plt
